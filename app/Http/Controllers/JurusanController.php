@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\jurusan;
 use App\Fakultas;
-
-class FakultasController extends Controller
+class JurusanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,13 @@ class FakultasController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Fakultas::when($request->search, function($query) use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%');
-        })->paginate(10);
+        $data = jurusan::when($request->search, function($query) use($request){
+            $query->where('name', 'LIKE', '%'.$request->search.'%')
+                  ->orwhere('nama_jurusan', 'LIKE', '%'.$request->search.'%');
+        })->join('fakultas', 'fakultas.id', '=', 'jurusan.jurusan_fakultas')
+        ->paginate(10);
 
-        return view('fakultas.index', compact('data'))->with('i', (request()->input('page', 1) - 1) * 10);
+        return view('jurusan.index', compact('data'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -28,7 +30,8 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        return view('fakultas.create');
+        $data = Fakultas::all();
+        return view('jurusan.create', compact('data'));
     }
 
     /**
@@ -40,14 +43,16 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'nama_jurusan' => 'required',
+            'jurusan_fakultas'=>'required'
         ]);
 
-        Fakultas::create([
-            'name' => $request->name
+        jurusan::create([
+            'nama_jurusan' => $request->nama_jurusan,
+            'jurusan_fakultas' => $request->jurusan_fakultas
         ]);
 
-        return redirect('/fakultas')->with('succes', 'Data is succesfully Added.');
+        return redirect('/jurusan')->with('succes', 'Data is succesfully Added.');
     }
 
     /**
@@ -69,8 +74,9 @@ class FakultasController extends Controller
      */
     public function edit($id)
     {
-        $fakultas = Fakultas::findOrFail($id);
-        return view('fakultas.edit', compact('fakultas'));
+        $fakultas = Fakultas::all();
+        $jurusan = jurusan::findOrFail($id);
+        return view('jurusan.edit', compact('jurusan'))->with('fakultas', $fakultas);
     }
 
     /**
@@ -80,12 +86,14 @@ class FakultasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, jurusan $jurusan)
     {
-        Fakultas::whereId($id)->update([
-            'name' => $request->name,
-        ]);
-        return redirect('/fakultas');
+        $form_data = array(
+            'nama_jurusan' => $request->nama_jurusan,
+            'jurusan_fakultas' => $request->jurusan_fakultas
+        );
+        $jurusan->update($form_data);
+        return redirect('/jurusan');
     }
 
     /**
@@ -96,8 +104,8 @@ class FakultasController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Fakultas::findOrFail($id);
+        $delete = jurusan::findOrFail($id);
         $delete->delete();
-        return redirect('/fakultas');
+        return redirect('/jurusan');
     }
 }
