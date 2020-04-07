@@ -25,7 +25,7 @@
           </div>
           <div class="card-header">
             <a href="{{route('fakultas.create')}}">
-              <button type="button" class="btn btn-primary">Add New</button>
+              <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
             </a>
           </div>
           <div class="card-body">
@@ -33,7 +33,6 @@
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">ID</th>
                   <th scope="col">Name</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -42,7 +41,6 @@
                @forelse($data as $fakultas)
                 <tr>
                   <td>{{ ++$i }}</td>
-                  <td>{{ $fakultas->id }}</td>
                   <td>{{ $fakultas->name }}</td>
                   <td>
                     <form action="{{ route('fakultas.destroy', $fakultas->id) }}" method="POST">

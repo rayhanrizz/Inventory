@@ -4,7 +4,7 @@
 <section class="section">
   
   <div class="section-header">
-    <h1>Fakultas</h1>
+    <h1>Ruangan</h1>
   </div>
 
   <div class="section-body">
@@ -19,13 +19,13 @@
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
               </div>
             </form>
-            <a href="{{ route('fakultas.index') }}" class="pull-right">
+            <a href="{{ route('ruangan.index') }}" class="pull-right">
               <button type="button" class="btn btn-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
-            <a href="{{route('fakultas.create')}}">
-              <button type="button" class="btn btn-primary">Add New</button>
+            <a href="{{route('ruangan.create')}}">
+              <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
             </a>
           </div>
           <div class="card-body">
@@ -33,21 +33,21 @@
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">ID</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Jurusan</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-               @forelse($data as $fakultas)
+               @forelse($data as $ruangan)
                 <tr>
                   <td>{{ ++$i }}</td>
-                  <td>{{ $fakultas->id }}</td>
-                  <td>{{ $fakultas->name }}</td>
+                  <td>{{ $ruangan->nama_ruangan }}</td>
+                  <td>{{ $ruangan->jurusan->nama_jurusan }}</td>
                   <td>
-                    <form action="{{ route('fakultas.destroy', $fakultas->id) }}" method="POST">
+                    <form action="{{ route('ruangan.destroy', $ruangan->id_ruangan) }}" method="POST">
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-warning edit_modal color" href="{{ route('fakultas.edit', $fakultas->id) }}"><i class="fas fa-pen"></i></a>
+                            <a class="btn btn-sm btn-warning edit_modal color" href="{{ route('ruangan.edit', $ruangan->id_ruangan) }}"><i class="fas fa-pen"></i></a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger delete color" onclick="return confirm('Are you sure to delete this data ?');"><i class="fas fa-trash"></i></button>

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\jurusan;
-use App\Fakultas;
-class JurusanController extends Controller
+use App\ruangan;
+
+class RuanganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +15,13 @@ class JurusanController extends Controller
      */
     public function index(Request $request)
     {
-        $data = jurusan::when($request->search, function($query) use($request){
-            $query->where('name', 'LIKE', '%'.$request->search.'%')
+        $data = ruangan::when($request->search, function($query) use($request){
+            $query->where('nama_ruangan', 'LIKE', '%'.$request->search.'%')
                   ->orwhere('nama_jurusan', 'LIKE', '%'.$request->search.'%');
-        })->join('fakultas', 'fakultas.id', '=', 'jurusan.jurusan_fakultas')
-        ->orderBy('id_jurusan','asc')->paginate(10);
+        })->join('jurusan', 'jurusan.id_jurusan', '=', 'ruangan.jurusan_id')
+        ->orderBy('id_ruangan','asc')->paginate(10);
 
-        return view('jurusan.index', compact('data'))->with('i', (request()->input('page', 1) - 1) * 10);
+        return view('ruangan.index', compact('data'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -30,8 +31,8 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        $data = Fakultas::all();
-        return view('jurusan.create', compact('data'));
+        $data = jurusan::all();
+        return view('ruangan.create_ruang', compact('data'));
     }
 
     /**
@@ -43,16 +44,16 @@ class JurusanController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nama_jurusan' => 'required',
-            'jurusan_fakultas'=>'required'
+            'nama_ruangan' => 'required',
+            'jurusan_id'=>'required'
         ]);
 
-        jurusan::create([
-            'nama_jurusan' => $request->nama_jurusan,
-            'jurusan_fakultas' => $request->jurusan_fakultas
+        ruangan::create([
+            'nama_ruangan' => $request->nama_ruangan,
+            'jurusan_id' => $request->jurusan_id
         ]);
 
-        return redirect('/jurusan')->with('succes', 'Data is succesfully Added.');
+        return redirect('/ruangan')->with('succes', 'Data is succesfully Added.');
     }
 
     /**
@@ -74,9 +75,9 @@ class JurusanController extends Controller
      */
     public function edit($id)
     {
-        $fakultas = Fakultas::all();
-        $jurusan = jurusan::findOrFail($id);
-        return view('jurusan.edit', compact('jurusan'))->with('fakultas', $fakultas);
+        $jurusan = jurusan::all();
+        $ruangan = ruangan::findOrFail($id);
+        return view('ruangan.edit', compact('ruangan'))->with('jurusan', $jurusan);
     }
 
     /**
@@ -86,14 +87,14 @@ class JurusanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, jurusan $jurusan)
+    public function update(Request $request, ruangan $ruangan)
     {
         $form_data = array(
-            'nama_jurusan' => $request->nama_jurusan,
-            'jurusan_fakultas' => $request->jurusan_fakultas
+            'jurusan_id' => $request->jurusan_id,
+            'nama_ruangan' => $request->nama_ruangan
         );
-        $jurusan->update($form_data);
-        return redirect('/jurusan');
+        $ruangan->update($form_data);
+        return redirect('/ruangan');
     }
 
     /**
@@ -104,8 +105,8 @@ class JurusanController extends Controller
      */
     public function destroy($id)
     {
-        $delete = jurusan::findOrFail($id);
+        $delete = ruangan::findOrFail($id);
         $delete->delete();
-        return redirect('/jurusan');
+        return redirect('/ruangan');
     }
 }

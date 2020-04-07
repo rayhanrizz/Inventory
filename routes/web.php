@@ -10,11 +10,22 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::get('signout', ['as' => 'auth.signout', 'uses' => 'Auth\loginController@signout']);
 
+Route::group(['middleware' => 'auth'], function(){
 
-Route::resource('fakultas','FakultasController');
-Route::resource('jurusan','JurusanController');
+	Route::group(['middleware' => 'checkRole:admin'], function(){
+		Route::resource('fakultas','FakultasController');
+		Route::resource('jurusan','JurusanController');	
+		Route::resource('ruangan','RuanganController');
+		Route::resource('barang','BarangController');
+	});
+	Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
+		Route::get('barang', ['as' => 'barang.index', 'uses' => 'BarangController@index']);
+		Route::get('barang/edit/{id}', ['as' => 'barang.edit', 'uses' => 'BarangController@edit']);
+		Route::put('barang/edit/{id}', ['as' => 'barang.update', 'uses' => 'BarangController@update']);
+	});
+});
 
-// Route::get('/', function () {
-//     return view('fakultas.index');
-// });
+Route::get('dashboard', 'DashboardController@index')->name('dashboard');
