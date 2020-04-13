@@ -28,6 +28,10 @@
             <a href="{{route('barang.create')}}">
               <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
             </a>
+            &nbsp;
+            <a href="export_brg">
+              <button type="button" class="btn btn-success"><i class="fa fa-print"></i> Export Excel</button>
+            </a>
           </div>
           @endif
           <div class="card-body">

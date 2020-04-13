@@ -27,6 +27,10 @@
             <a href="{{route('ruangan.create')}}">
               <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
             </a>
+            &nbsp;
+            <a href="export_ruang">
+              <button type="button" class="btn btn-success"><i class="fa fa-print"></i> Export Excel</button>
+            </a>
           </div>
           <div class="card-body">
             <table class="table table-hover">

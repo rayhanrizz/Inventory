@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fakultas;
+use App\Exports\FakultasExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FakultasController extends Controller
 {
@@ -99,5 +101,9 @@ class FakultasController extends Controller
         $delete = Fakultas::findOrFail($id);
         $delete->delete();
         return redirect('/fakultas');
+    }
+    public function export(Request $request)
+    {
+        return Excel::download(new FakultasExport, 'fakultas-'.date("Y-m-d").'.xlsx');
     }
 }

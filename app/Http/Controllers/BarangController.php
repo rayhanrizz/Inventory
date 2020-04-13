@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\barang;
 use App\ruangan;
 use App\User;
+use App\Exports\BarangExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BarangController extends Controller
 {
@@ -121,5 +123,9 @@ class BarangController extends Controller
         $delete = barang::findOrFail($id);
         $delete->delete();
         return redirect('/barang');
+    }
+    public function export(Request $request)
+    {
+        return Excel::download(new BarangExport, 'barang-'.date("Y-m-d").'.xlsx');
     }
 }

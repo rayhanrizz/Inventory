@@ -15,6 +15,13 @@ Route::get('signout', ['as' => 'auth.signout', 'uses' => 'Auth\loginController@s
 
 Route::group(['middleware' => 'auth'], function(){
 
+	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+	Route::get('export_brg', 'BarangController@export');
+	Route::get('export_fklts', 'FakultasController@export');
+	Route::get('export_jrsn', 'JurusanController@export');
+	Route::get('export_ruang', 'RuanganController@export');
+
 	Route::group(['middleware' => 'checkRole:admin'], function(){
 		Route::resource('fakultas','FakultasController');
 		Route::resource('jurusan','JurusanController');	
@@ -27,5 +34,3 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::put('barang/edit/{id}', ['as' => 'barang.update', 'uses' => 'BarangController@update']);
 	});
 });
-
-Route::get('dashboard', 'DashboardController@index')->name('dashboard');
