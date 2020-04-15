@@ -4,7 +4,7 @@
 <section class="section">
   
   <div class="section-header">
-    <h1>Fakultas</h1>
+    <h1>Jurusan</h1>
   </div>
 
   <div class="section-body">
@@ -19,16 +19,16 @@
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
               </div>
             </form>
-            <a href="{{ route('fakultas.index') }}" class="pull-right">
+            <a href="{{ route('jurusan.index') }}" class="pull-right">
               <button type="button" class="btn btn-info">All Data</button>
             </a>
           </div>
           <div class="card-header">
-            <a href="{{route('fakultas.create')}}">
+            <a href="{{route('jurusan.create')}}">
               <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
             </a>
             &nbsp;
-            <a href="export_fklts">
+            <a href="export_jrsn">
               <button type="button" class="btn btn-success"><i class="fa fa-print"></i> Export Excel</button>
             </a>
           </div>
@@ -38,18 +38,20 @@
                 <tr>
                   <th scope="col">No</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Fakultas</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-               @forelse($data as $fakultas)
+               @forelse($data as $jurusan)
                 <tr>
                   <td>{{ ++$i }}</td>
-                  <td>{{ $fakultas->name }}</td>
+                  <td>{{ $jurusan->nama_jurusan }}</td>
+                  <td>{{ $jurusan->fakultas->name }}</td>
                   <td>
-                    <form action="{{ route('fakultas.destroy', $fakultas->id) }}" method="POST">
+                    <form action="{{ route('jurusan.destroy', $jurusan->id_jurusan) }}" method="POST">
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-warning edit_modal color" href="{{ route('fakultas.edit', $fakultas->id) }}"><i class="fas fa-pen"></i></a>
+                            <a class="btn btn-sm btn-warning edit_modal color" href="{{ route('jurusan.edit', $jurusan->id_jurusan) }}"><i class="fas fa-pen"></i></a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger delete color" onclick="return confirm('Are you sure to delete this data ?');"><i class="fas fa-trash"></i></button>
