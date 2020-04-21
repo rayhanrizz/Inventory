@@ -43,6 +43,7 @@
                   <th scope="col">Ruangan</th>
                   <th scope="col">Total</th>
                   <th scope="col">Broken</th>
+                  <th scope="col">Gambar</th>
                   <th scope="col">Created By</th>
                   <th scope="col">Updated By</th>
                   <th scope="col">Action</th>
@@ -56,6 +57,7 @@
                   <td>{{ $brg->ruangan->nama_ruangan }}</td>
                   <td>{{ $brg->total }}</td>
                   <td>{{ $brg->broken }}</td>
+                  <td><img width="120px" src="{{ url('/image/'.$brg->gambar) }}"></td>
                   <td>@foreach($user as $u)
                         @if($u->id == $brg->created_by)
                           {{ $u->name }}

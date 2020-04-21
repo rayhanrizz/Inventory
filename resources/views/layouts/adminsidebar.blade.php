@@ -7,10 +7,10 @@
             <a href="index.html">Inv</a>
           </div>
           <ul class="sidebar-menu">
-              @if(auth()->user()->role == 'admin')
-              <li class="">
+            <li class="">
                   <a class="nav-link" href="{{url('dashboard')}}"><i class="fas fa-square"></i> <span>Dashboard</span></a>
                 </li>
+              @if(auth()->user()->role == 'admin')
                 <li class="">
                   <a class="nav-link" href="{{ route('fakultas.index') }}"><i class="fas fa-fire"></i> <span>Fakultas</span></a>
                 </li>

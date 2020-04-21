@@ -84,6 +84,9 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
         Fakultas::whereId($id)->update([
             'name' => $request->name,
         ]);

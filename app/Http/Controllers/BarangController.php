@@ -47,22 +47,36 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'ruangan_id'=>'required',
             'nama_barang' => 'required',
-            'total'=>'required',
-            'broken'=>'required',
+            'total'=>'required|integer',
+            'broken'=>'required|integer',
             'created_by'=>'required',
+            'gambar' => 'required|image|max:2048'
         ]);
-
+     
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('gambar');
+     
+        $nama_file = time()."_".$file->getClientOriginalName();
+     
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'image';
+        $file->move($tujuan_upload,$nama_file);
+     
+     
         barang::create([
             'ruangan_id' => $request->ruangan_id,
             'nama_barang' => $request->nama_barang,
             'total' => $request->total,
             'broken' => $request->broken,
-            'created_by' => $request->created_by,
+            'gambar' => $nama_file,
+            'created_by' => $request->created_by
         ]);
 
+        
         return redirect('/barang')->with('succes', 'Data is succesfully Added.');
     }
 
@@ -100,11 +114,32 @@ class BarangController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $nama_file = $request->hidden_image;
+        $file = $request->file('gambar');
+
+        if ($file !='') {
+                $this->validate($request, [
+                'gambar' => 'required|image|max:2048',
+            ]);
+                $nama_file = time()."_".$file->getClientOriginalName();
+                $tujuan_upload = 'image';
+                $file->move($tujuan_upload,$nama_file);
+        }else{
+            $request->validate([
+                'ruangan_id' => 'required',
+                'nama_barang' => 'required',
+                'total' => 'required|integer',
+                'broken' => 'required|integer',
+                'created_by' => 'required'
+            ]);
+        }
+
         $form_data = array(
             'ruangan_id' => $request->ruangan_id,
             'nama_barang' => $request->nama_barang,
             'total' => $request->total,
             'broken' => $request->broken,
+            'gambar' => $nama_file,
             'created_by' => $request->created_by,
             'updated_by' => $request->updated_by
         );

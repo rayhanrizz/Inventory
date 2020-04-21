@@ -19,6 +19,15 @@
               </button>
           </a>
           </div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{{$error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           <div class="card-body">
             <form action="{{ route('barang.update', ['barang' => $barang->id_barang]) }}" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="_method" value="PUT">
@@ -34,6 +43,11 @@
               <div class="form-group">
                 <label>Broken</label>
                 <input type="text" name="broken" class="form-control" value="{{ $barang->broken }}">
+              </div>
+              <div class="form-group">
+                <label for="harga" class="control-label">Gambar</label>
+                <input name="gambar" type="file" class="form-control" value="{{ url('/image/'.$barang->gambar) }}">
+                <input name="hidden_image" type="hidden" class="form-control" value="{{$barang->gambar}}">
               </div>
               <div class="form-group">
                   <label for="ruangan_id" class="control-label">Ruangan</label>

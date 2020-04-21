@@ -91,6 +91,10 @@ class RuanganController extends Controller
      */
     public function update(Request $request, ruangan $ruangan)
     {
+        $this->validate($request, [
+            'nama_ruangan' => 'required',
+            'jurusan_id'=>'required'
+        ]);
         $form_data = array(
             'jurusan_id' => $request->jurusan_id,
             'nama_ruangan' => $request->nama_ruangan

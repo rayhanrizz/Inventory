@@ -90,6 +90,10 @@ class JurusanController extends Controller
      */
     public function update(Request $request, jurusan $jurusan)
     {
+        $this->validate($request, [
+            'nama_jurusan' => 'required',
+            'jurusan_fakultas'=>'required'
+        ]);
         $form_data = array(
             'nama_jurusan' => $request->nama_jurusan,
             'jurusan_fakultas' => $request->jurusan_fakultas

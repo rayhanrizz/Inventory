@@ -19,6 +19,15 @@
               </button>
           </a>
           </div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           <div class="card-body">
             <form action="{{ route('fakultas.update', ['fakultas' => $fakultas->id]) }}" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="_method" value="PUT">
