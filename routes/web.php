@@ -35,3 +35,5 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::put('barang/edit/{id}', ['as' => 'barang.update', 'uses' => 'BarangController@update']);
 	});
 });
+
+Route::get('/sendemail','EmailController@send');
