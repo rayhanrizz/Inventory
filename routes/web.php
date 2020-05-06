@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('export_jrsn', 'JurusanController@export');
 	Route::get('export_ruang', 'RuanganController@export');
 
+	Route::post('import_fklts', 'FakultasController@import');
+
 	Route::group(['middleware' => 'checkRole:admin'], function(){
 		Route::resource('fakultas','FakultasController');
 		Route::resource('jurusan','JurusanController');	

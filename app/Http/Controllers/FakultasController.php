@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Fakultas;
 use App\Exports\FakultasExport;
+use App\Imports\FakultasImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FakultasController extends Controller
@@ -108,5 +109,13 @@ class FakultasController extends Controller
     public function export(Request $request)
     {
         return Excel::download(new FakultasExport, 'fakultas-'.date("Y-m-d").'.xlsx');
+    }
+    public function import(Request $request) 
+    {
+        $file = $request->file('file');
+        $filename = rand().$file->getClientOriginalName();
+        $file->move('excel/fakultas',$filename);
+        Excel::import(new FakultasImport, public_path('/excel/fakultas/'.$filename));
+        return redirect()->route('fakultas.index');
     }
 }

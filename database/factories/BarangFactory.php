@@ -19,7 +19,7 @@ $factory->define(barang::class, function (Faker $faker) {
     return [
         'ruangan_id' => $faker->numberBetween($min = 1, $max = 5),
         'nama_barang' => $faker->randomElement($list_barang),
-        'total' => $faker->numberBetween($min = 1, $max = 5),
+        'total' => $faker->numberBetween($min = 1, $max = 10),
         'broken' => $faker->numberBetween($min = 0, $max = 3),
         'gambar' => $faker->picsum('public/image',400,400, false),
         'created_by' => 1
