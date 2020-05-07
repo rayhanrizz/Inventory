@@ -3,15 +3,16 @@
 namespace App\Exports;
 
 use App\Fakultas;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class FakultasExport implements FromCollection
+class FakultasExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Fakultas::all();
+        return view('exports.fakultas', [
+        	'i'		=> 0,
+            'data' 	=> Fakultas::all()
+        ]);
     }
 }

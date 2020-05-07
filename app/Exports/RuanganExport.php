@@ -3,15 +3,16 @@
 namespace App\Exports;
 
 use App\ruangan;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class RuanganExport implements FromCollection
+class RuanganExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return ruangan::all();
+        return view('exports.ruangan', [
+        	'i'		=> 0,
+            'data' 	=> ruangan::all()
+        ]);
     }
 }

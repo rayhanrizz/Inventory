@@ -3,15 +3,16 @@
 namespace App\Exports;
 
 use App\jurusan;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class JurusanExport implements FromCollection
+class JurusanExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return jurusan::all();
+        return view('exports.jurusan', [
+        	'i'		=> 0,
+            'data' 	=> jurusan::all()
+        ]);
     }
 }
