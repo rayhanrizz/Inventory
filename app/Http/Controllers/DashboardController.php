@@ -18,4 +18,10 @@ class DashboardController extends Controller
         $brg = barang::count();
         return view('dashboard.index', compact('count','jur','ruang','brg'));
     }
+
+    public function landingpage()
+    {
+        $data = barang::all();
+        return view('index', compact('data'));
+    }
 }

@@ -14,7 +14,7 @@ Auth::routes();
 Route::get('signout', ['as' => 'auth.signout', 'uses' => 'Auth\loginController@signout']);
 
 Route::group(['middleware' => 'auth'], function(){
-	Route::get('/', 'DashboardController@index');
+	// Route::get('/', 'DashboardController@index');
 
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
@@ -39,3 +39,4 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 Route::get('/sendemail','EmailController@send');
+Route::get('/', 'DashboardController@landingpage');
