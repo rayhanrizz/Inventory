@@ -33,6 +33,14 @@
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Barang</h2>
                 </div>
+                <form method="GET" class="form-inline" style="align-content: center; margin-bottom: 10px;">
+                  <div class="form-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request()->get('search') }}">
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                  </div>
+                </form>
                 <div class="row">
                     @foreach($data as $brg)
                     <div class="col-lg-4 col-sm-6 mb-4">

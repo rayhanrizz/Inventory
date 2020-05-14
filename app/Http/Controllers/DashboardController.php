@@ -19,9 +19,13 @@ class DashboardController extends Controller
         return view('dashboard.index', compact('count','jur','ruang','brg'));
     }
 
-    public function landingpage()
+    public function landingpage(Request $request)
     {
-        $data = barang::all();
-        return view('index', compact('data'));
+        $data = barang::when($request->search, function($query) use($request){
+            $query->where('nama_barang', 'LIKE', '%'.$request->search.'%')
+                  ->orwhere('nama_ruangan', 'LIKE', '%'.$request->search.'%');
+        })->join('ruangan', 'ruangan.id_ruangan', '=', 'barang.ruangan_id')
+        ->orderBy('id_barang','asc')->paginate(10);
+        return view('index', compact('data'))->with('i', (request()->input('page', 1) - 1) * 10);
     }
 }
