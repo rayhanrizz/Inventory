@@ -120,6 +120,11 @@ class BarangController extends Controller
         if ($file !='') {
                 $this->validate($request, [
                 'gambar' => 'required|image|max:2048',
+                'ruangan_id' => 'required',
+                'nama_barang' => 'required',
+                'total' => 'required|integer',
+                'broken' => 'required|integer',
+                'created_by' => 'required'
             ]);
                 $nama_file = time()."_".$file->getClientOriginalName();
                 $tujuan_upload = 'image';
